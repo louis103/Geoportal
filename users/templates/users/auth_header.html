@@ -1,0 +1,101 @@
+{% comment %} start navbar {% endcomment %}
+<!-- Bootstrap basic Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
+<!-- <nav class="navbar navbar-expand-lg navbar-light bg-light"> -->
+<div class="container-fluid">
+  <!-- <a class="navbar-brand" href="/">Lowa Geoportal</a> -->
+  <a href="/" class="navbar-brand">
+    <img src="https://gisdata-001.s3.amazonaws.com/media/images/location.png" height="40" width="40" class="d-inline-block align-top" alt="Lowa Geoportal">
+    Lowa Geoportal
+  </a>
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  
+  {% if user.is_authenticated %}
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link active" href="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="/list_datasets">Datasets</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="/map">Map</a>
+        </li>
+      </ul>
+      <!-- <form class="form-inline my-2 my-lg-0">
+        <input
+          class="form-control mr-sm-2"
+          type="search"
+          placeholder="Search Datasets"
+          aria-label="Search"
+        />
+        <button class="btn btn-success my-2 my-sm-0" type="submit">
+          Search
+        </button>
+      </form> -->
+
+    <!-- {% comment %} added user icon {% endcomment %} -->
+    <!--  pmd-dropdown pmd-user-info ml-auto -->
+    <!--            -->
+      <div class="dropdown">
+        <a
+          href="javascript:void(0);"
+          class="btn-user dropdown-toggle media align-items-center text-white"
+          data-bs-toggle="dropdown"
+          data-sidebar="true"
+          aria-expanded="false"
+        >
+        <img
+          class="mr-2"
+          src="{{ request.user.profile.avatar.url }}"
+          width="40"
+          height="40"
+          alt="avatar"
+          style="border-radius: 50%"
+        />
+        <!-- {% comment %} <i class="bi bi-person-circle"></i> {% endcomment %} -->
+        <div class="">{{ request.user.username }}</div>
+        </a>
+        <!--  dropdown-menu-right role="menu"  style="right: 0; left: auto;"-->
+        <ul class="dropdown-menu dropdown-menu-end" role="menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="{% url 'users-profile' %}">Edit Profile</a>
+          <!-- <a class="dropdown-item" href="{% url 'file-upload' %}">Contribute</a> -->
+          <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+        </ul>
+
+      </div>
+      <!-- {% comment %} ended user icon {% endcomment %} -->
+    </div>
+    {% else %}
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link active" href="/">Home</a>
+        </li>
+         <li class="nav-item">
+          <a class="nav-link" href="/list_datasets">Datasets</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/map">Map</a>
+        </li>
+      </ul>
+      <!-- <form class="form-inline my-2 my-lg-0">
+        <input
+          class="form-control mr-sm-2"
+          type="search"
+          placeholder="Search Datasets"
+          aria-label="Search"
+        />
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+          Search
+        </button>
+      </form> -->
+      <a href="{% url 'login' %}" class="nav-item nav-link ml-auto text-white">Sign in</a>
+    </div>
+    {% endif %}
+  </div>
+</nav>
+{% comment %} end navbar {% endcomment %}

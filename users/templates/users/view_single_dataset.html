@@ -1,0 +1,47 @@
+{% extends 'users/base.html' %}
+{% load static %}
+{% block content %}
+
+{% if dataset_details %}
+<div class="card mb-3">
+    <div class="card-body">
+        <h2 class="card-title h5" style='color:green;'>
+            {{ dataset_details.title }}
+        </h2>
+        <div class="row g-0">
+            <div class="col-md-5">
+                <div class="ratio ratio-1x1" style="width: 200px; height: 200px;" >
+                    {% comment %} <img src="{{ post.image.url }}" class="rounded featured-image-list" alt="{{post.title}}"> {% endcomment %}
+                    <img src="{{ dataset_details.img_icon_url }}" class="rounded featured-image-list" height='75%' width='75%' alt="csv logo">
+                </div>
+            </div>
+            <div class="col-md-7 ps-md-3 pt-0 pt-md-0 d-flex flex-column">
+                <h5 class="card-title">Abstract</h5>
+                <p class="card-text">
+                    {{ dataset_details.metadata }}
+                </p>
+                <h6 class="card-text text-dark mb-3">Type: {{ dataset_details.gis_data_type }}</h6>
+                <h6 class="card-text text-dark mb-3">License: {{ dataset_details.license }}</h6>
+                <h6 class="card-text text-dark mb-3">Category: {{ dataset_details.category }}</h6>
+                <h6 class="card-text text-dark mb-3">Projection System: {{ dataset_details.data_projection }}</h6>
+                <h6 class="card-text text-dark mb-3">Spatial Extent: {{ dataset_details.spatial_extent }}</h6>
+                <h6 class="card-text text-dark mb-3">Attribution Data: {{ dataset_details.attribution }}</h6>
+                <h6 class="card-text text-dark mb-3">Organization: {{ dataset_details.organization }}</h6>
+                <p class="card-text text-secondary mb-3">Http URL: <a href="https://gisdata-001.s3.amazonaws.com/Datasets/{{ dataset_details.gis_data_key }}" target="_blank">https://gisdata-001.s3.amazonaws.com/Datasets/{{ dataset_details.gis_data_key }}</a></>
+                <div class='mt-6'>
+                    <a target="_blank" href="https://gisdata-001.s3.amazonaws.com/Datasets/{{ dataset_details.gis_data_key }}" class="btn btn-success">Download Dataset</a>
+                    <a target="_blank" href="{% url 'download_metadata' dataset_details.id %}" class="btn btn-outline-secondary">Download Metadata</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="card-footer">
+        <small class="text-muted">Publication Date {{ dataset_details.publish.date }}. By Admin</small>
+        <a href="/list_datasets/" class="btn btn-success btn-sm text-white">Go Back</a>
+    </div>
+</div>
+{% else %}
+<p class="card-text text-secondary mb-2">No Details for that Dataset.</p>
+{% endif %}
+{% endblock content %}

@@ -1,0 +1,54 @@
+{% extends 'users/base.html' %}
+{% load static %}
+{% block content %}
+<h4 style='text-align: center;color:green;' class="mb-4">Browse All {{ data_count }} Datasets</h4>
+<!-- <p class="text-center" style='color:rgb(0, 66, 128);'>Browse our {{ data_count }} dataset(s)</p> -->
+{% include 'users/filter_headers.html' %}
+<hr/>
+<br>
+{% if datasets %}
+{% for data in datasets %}
+    <div class="card mb-3">
+        <div class="card-body">
+            <div class="row g-0">
+                <div class="col-md-5">
+                    <div class="ratio ratio-1x1" style="width: 130px; height: 130px;">
+                        <img src="{{ data.img_icon_url }}" class="rounded featured-image-list" height="100px" width="100px" alt="csv logo">
+                    </div>
+                </div>
+                <div class="col-md-7 ps-md-3 pt-3 pt-md-0 d-flex flex-column">
+
+                    <h2 class="card-title h5" style='color:green;'>
+                            {{ data.title }}
+                    </h2>
+                    <h5 class="card-title h5 text-secondary">
+                        Type: {{ data.gis_data_type }} Data
+                    </h5>
+
+                    <div class="text-muted">
+                        <small>
+                            <!-- {% comment %} Published {{ post.publish.date }} by <strong>{{ post.author }}</strong> {% endcomment %} -->
+                            Published {{ data.created_at.date }} by <strong>Admin</strong>
+                        </small>
+                    </div>
+
+                    <p class="card-text mb-auto py-2">{{ data.metadata|safe|striptags|truncatechars:250 }}</p>
+
+                    <div>
+                        <!-- {% comment %} <a href="{{ post.get_absolute_url }}" class="btn btn-primary btn-sm">Read more</a> {% endcomment %} -->
+                        <a href="{% url 'view_single_dataset' data.id %}" class="btn btn-secondary">View Dataset</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+<!-- add pagination here -->
+{% include "users/pagination.html" with page=datasets %}
+
+{% else %}
+    <p>No Datasets found.</p>
+{% endif %}
+
+{% endblock content %}

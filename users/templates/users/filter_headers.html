@@ -1,0 +1,103 @@
+<div class="main">
+    <form method="GET" action="" class="d-flex">
+        <input class="form-control me-2" name="search" id="search" type="search" placeholder="Search Dataset"
+        aria-label="Search">
+        <button class="btn btn-success" type="submit">Search</button>
+    </form>
+    <div class="d-flex justify-content-center mt-2 mb-2">
+    <!-- For Making A Search Bar -->
+    <!-- For filtering based on Price -->
+    <select class="form-select pr-2" aria-label="Default select example" name="type" id="type-list" onchange="location = finalurl2();" style="margin-left: auto;">
+      <option value="" id="type-placeholder" disabled selected hidden>Filter Datasets</option>
+      <option id="prVector" value="Vector">All Vector Datasets</option>
+      <option id="prRaster" value="Raster">All Raster Datasets</option>
+      <option id="prOther" value="Other">Other Datasets</option>
+    </select>
+    <!-- filter by category -->
+    <select class="form-select pr-2" aria-label="Default select example" name="category" id="category-list" onchange="location = finalurl3();" style="margin-left: auto;">
+      <option value="" id="category-placeholder" disabled selected hidden>Filter By Category</option>
+      <option id="prGis" value="Gis">Gis</option>
+      <option id="prHumanitarian" value="Humanitarian">Humanitarian</option>
+      <option id="prClimate" value="Climate">Climate Change</option>
+      <option id="prSocial" value="Social">Social Life</option>
+      <option id="prSociety" value="Society">Society</option>
+      <option id="prRemote" value="Remote">Remote Sensing</option>
+      <option id="prResearch" value="Research">Spatial Research</option>
+      <option id="prEconomy" value="Economy">Economy</option>
+      <option id="prDemography" value="Demography">Demography</option>
+      <option id="prOther" value="Other">Other</option>
+    </select>
+    <!-- end filtering by category -->
+
+    <!-- For making sorting functionality -->
+    <select class="form-select pl-2" aria-label="Default select example" name="sort" id="sort-list" onchange="location = finalurl();" style="margin-left: auto;">
+      <option value="" id="placeholder" disabled selected hidden>Sort Datasets</option>
+      <option id="-updated_at" value="-updated_at">Newly Added Datasets</option>
+      <option id="updated_at" value="updated_at">Oldest Datasets</option>
+      <option id="title" value="title">Dataset Title</option>
+      <option id="-metadata" value="-metadata">Metadata</option>
+    </select>
+  </div>
+  <a href="/list_datasets/?search=&type=&ordering=&category=" class="btn btn-secondary btn-block">Reset All Filters</a>
+</div>
+
+{% block js %}
+<script>
+//logic goes here
+// for getting the sorting status to be displayed in sorting dropdown placeholder
+  function get(name) {
+    if (name = (new RegExp('[?&]' + encodeURIComponent(name) + '=([^&]*)')).exec(location.search))  //location.search give query sling part
+      return decodeURIComponent(name[1]);
+  }
+
+  if(get('ordering'))
+  document.getElementById('placeholder').innerHTML = "Sort: " + document.getElementById(get('ordering')).innerHTML;
+
+  if(get('type'))
+  document.getElementById('type-placeholder').innerHTML = "Type: " + document.getElementById('pr'+get('type')).innerHTML;
+
+  if(get('category'))
+  document.getElementById('category-placeholder').innerHTML = "Category: " + document.getElementById('pr'+get('category')).innerHTML;
+
+  // for getting url after applying ordering
+  function finalurl() {
+    var url = new URL(window.location.href);
+    var search_params = url.searchParams;
+    search_params.set('ordering', document.getElementById("sort-list").value);
+    url.search = search_params.toString();
+    var new_url = url.toString();
+    return new_url
+  }
+  
+  // for getting url after applying price filtering
+  function finalurl2() {
+    var url = new URL(window.location.href);
+    var search_params = url.searchParams;
+    search_params.set('type', document.getElementById("type-list").value);
+    url.search = search_params.toString();
+    var new_url = url.toString();
+    return new_url
+  }
+
+  function finalurl3() {
+    var url = new URL(window.location.href);
+    var search_params = url.searchParams;
+    search_params.set('category', document.getElementById("category-list").value);
+    url.search = search_params.toString();
+    var new_url = url.toString();
+    return new_url
+  }
+</script>
+
+<script>
+    // for giving suggestions in search box by calling an API
+    $(document).ready(function () {
+        $(function () {
+            $("#search").autocomplete({
+                source: "{% url 'suggestionapi' %}",
+                minLength: 2
+            });
+        });
+    });
+  </script>
+{% endblock js %}

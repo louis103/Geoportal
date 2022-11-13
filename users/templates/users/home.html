@@ -1,0 +1,79 @@
+{% extends "users/base.html" %}
+{% block title %} Home Page {% endblock title%}
+{% block content %}
+    <div class="jumbotron">
+        {% if request.user.username %}
+            <h5 class="display-5">Welcome {{ request.user.username }}</h5>
+        {% else %}
+            <h5 class="display-5">Welcome, Visitor</h5>
+        {% endif %}
+        <p class="lead">
+            Welcome to <b>Lowa Geoportal</b>,the home to Humanitarian Spatial Datasets and Solutions.
+            <!-- a Python-based free and open-source web framework that follows the model–template–views architectural pattern. -->
+        </p>
+        <hr class="my-4">
+        <p class="lead">
+            {% if user.is_authenticated %}
+                <a class="btn btn-primary" href="{% url 'logout' %}" role="button">Logout</a>
+                <a class="btn btn-success" href="contact_us/" role="button">Send Feedback</a>
+            {% else %}
+                <a class="btn btn-primary btn-lg" href="{% url 'login' %}" role="button">Sign in</a>
+            {% endif %}
+        </p>
+        <!-- start of carousel -->
+        <div class="accordion" id="accordionPanelsStayOpenExample">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                  What is a Geoportal?
+                </button>
+              </h2>
+              <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+                <div class="accordion-body">
+                  A geoportal is a gateway to web-based geospatial resources, enabling you to discover, view, and access geospatial information and services made available by their providing organizations. Likewise, data providers can use the geoportal to make their geospatial resources discoverable, viewable, and accessible to others.
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+                  Who uses Geoportal?
+                </button>
+              </h2>
+              <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
+                <div class="accordion-body">
+                  A geoportal that is publicly accessible can be used by Humanitarian Organizations, Local Governments, National Governments, Gis Specialists, Students on research projects,Remote Sensing specialists,Cartographers, NGOs, Property Developers and also in Emergency response teams. Above all, a Geoportal comes handy during data hunting since it offers a centralized location and availability of spatial datasets.
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="panelsStayOpen-headingThree">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                  Can I contribute datasets to this geoportal? 
+                </button>
+              </h2>
+              <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
+                <div class="accordion-body">
+                  Absolutely Yes. If you want to share your datasets you've used in own projects, you can send us an email at <code>lowasoftwaresltd@gmail.com</code> then the administrator of the geoportal will publish the dataset.
+                </div>
+              </div>
+            </div>
+            <!-- How to download datasets -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFour" aria-expanded="false" aria-controls="panelsStayOpen-collapseFour">
+                    How to download/access datasets?
+                  </button>
+                </h2>
+                <div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
+                  <div class="accordion-body">
+                    Once on the geoportal, click on the 'Datasets' link on the header. This opens a new page with different datasets, here you can <code>Search</code> dataset(s),<code>Filter</code> dataset(s) or <code>Order</code> certain dataset(s) for easier location. Once you see a dataset you like,click on <code>View Dataset</code> button to reveal the metadata. On the new page, you can either download dataset, or download metadata. What is more advisable is downloading both the dataset and metadata so as to have a easy time working with the dataset.  
+                  </div>
+                </div>
+              </div>
+
+          </div>
+        <!-- end of carousel -->
+    </div>
+
+{% endblock content %}
